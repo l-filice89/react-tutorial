@@ -2,8 +2,12 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Employees from "./components/Employees/Employees";
+import GroupedTeamMembers from "./components/GroupedTeamMembers/GroupedTeamMembers";
+import Nav from "./components/Nav/Nav";
+import NotFound from "./components/NotFound/NotFound";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState, useEffect} from "react";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 function App() {
 
@@ -117,13 +121,27 @@ function App() {
 
     return (
         <div>
-            <Header selectedTeam={selectedTeam}
-                    teamMemberCount={employees.filter((employee) => employee.teamName === selectedTeam).length}/>
-            <Employees employees={employees}
-                       selectedTeam={selectedTeam}
-                       handleEmployeeCardClick={handleEmployeeCardClick}
-                       handleTeamSelectionChange={handleTeamSelectionChange}/>
-            <Footer/>
+            <Router>
+                <Nav/>
+                <Header selectedTeam={selectedTeam}
+                        teamMemberCount={employees.filter((employee) => employee.teamName === selectedTeam).length}/>
+                <Routes>
+                    <Route path="/"
+                           element={<Employees employees={employees}
+                                               selectedTeam={selectedTeam}
+                                               handleEmployeeCardClick={handleEmployeeCardClick}
+                                               handleTeamSelectionChange={handleTeamSelectionChange}/>}>
+
+                    </Route>
+                    <Route path="/GroupedTeamMembers"
+                           element={<GroupedTeamMembers/>}>
+                    </Route>
+                    <Route path="/*"
+                           element={<NotFound/>}>
+                    </Route>
+                </Routes>
+                <Footer/>
+            </Router>
         </div>
     );
 }
