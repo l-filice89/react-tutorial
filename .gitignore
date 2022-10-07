@@ -1,2 +1,5 @@
 #INTELLIJ
 .idea/
+
+#NODE
+node_modules
